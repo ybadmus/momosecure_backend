@@ -1,0 +1,8 @@
+<div class="content grid">
+  <div class="text">
+    <h2>
+      <%= I18n.t("apology_msg1", locale: @user.locale) %>
+    </h2>
+      <%= I18n.t("apology_html", locale: @user.locale, sales_email: @sales_email).html_safe %>
+  </div>
+</div>
