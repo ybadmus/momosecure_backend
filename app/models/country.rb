@@ -1,5 +1,28 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: countries
+#
+#  id           :bigint           not null, primary key
+#  commission   :decimal(10, 3)   default(0.0)
+#  country_name :string(255)
+#  currency     :string(3)
+#  is_active    :boolean          default(FALSE), not null
+#  is_deleted   :boolean          default(FALSE), not null
+#  iso_code2    :string(2)
+#  iso_code3    :string(3)
+#  nationality  :string(255)
+#  phone_code   :string(5)
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
+# Indexes
+#
+#  index_countries_on_country_name  (country_name) UNIQUE
+#  index_countries_on_iso_code2     (iso_code2) UNIQUE
+#  index_countries_on_phone_code    (phone_code) UNIQUE
+#
 class Country < ApplicationRecord
   include DestroyRecord
 
