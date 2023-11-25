@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_231_125_134_820) do
+ActiveRecord::Schema[7.0].define(version: 20_231_125_232_405) do
   create_table 'active_storage_attachments', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
     t.string 'name', null: false
     t.string 'record_type', null: false
@@ -46,6 +46,28 @@ ActiveRecord::Schema[7.0].define(version: 20_231_125_134_820) do
     t.boolean 'is_deleted', default: false, null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+  end
+
+  create_table 'audits', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
+    t.integer 'auditable_id'
+    t.string 'auditable_type'
+    t.integer 'associated_id'
+    t.string 'associated_type'
+    t.integer 'user_id'
+    t.string 'user_type'
+    t.string 'username'
+    t.string 'action'
+    t.json 'audited_changes'
+    t.integer 'version', default: 0
+    t.string 'comment'
+    t.string 'remote_address'
+    t.string 'request_uuid'
+    t.datetime 'created_at'
+    t.index %w[associated_type associated_id], name: 'associated_index'
+    t.index %w[auditable_type auditable_id version], name: 'auditable_index'
+    t.index ['created_at'], name: 'index_audits_on_created_at'
+    t.index ['request_uuid'], name: 'index_audits_on_request_uuid'
+    t.index %w[user_id user_type], name: 'user_index'
   end
 
   create_table 'comments', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
@@ -125,7 +147,7 @@ ActiveRecord::Schema[7.0].define(version: 20_231_125_134_820) do
   create_table 'user_auths', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
     t.string 'auth_token'
     t.boolean 'can_takeover_user', default: false, null: false
-    t.bigint 'countries_id', null: false
+    t.bigint 'country_id', null: false
     t.string 'email'
     t.string 'ip_address'
     t.boolean 'is_deleted', default: false, null: false
@@ -142,7 +164,7 @@ ActiveRecord::Schema[7.0].define(version: 20_231_125_134_820) do
     t.integer 'user_id'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.index ['countries_id'], name: 'index_user_auths_on_countries_id'
+    t.index ['country_id'], name: 'index_user_auths_on_country_id'
     t.index %w[email is_deleted], name: 'index_user_auths_on_email_and_is_deleted', unique: true
     t.index %w[phone is_deleted], name: 'index_user_auths_on_phone_and_is_deleted', unique: true
     t.index %w[secondary_phone is_deleted], name: 'index_user_auths_on_secondary_phone_and_is_deleted', unique: true
