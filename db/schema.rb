@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_231_120_020_511) do
+ActiveRecord::Schema[7.0].define(version: 20_231_125_134_820) do
   create_table 'active_storage_attachments', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
     t.string 'name', null: false
     t.string 'record_type', null: false
@@ -48,13 +48,16 @@ ActiveRecord::Schema[7.0].define(version: 20_231_120_020_511) do
     t.datetime 'updated_at', null: false
   end
 
-  create_table 'attachments', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
-    t.string 'name', null: false
+  create_table 'comments', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
+    t.text 'content'
+    t.bigint 'user_auths_id', null: false
     t.string 'attachable_type'
     t.bigint 'attachable_id'
+    t.boolean 'is_deleted', default: false, null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.index %w[attachable_type attachable_id], name: 'index_attachments_on_attachable'
+    t.index %w[attachable_type attachable_id], name: 'index_comments_on_attachable'
+    t.index ['user_auths_id'], name: 'index_comments_on_user_auths_id'
   end
 
   create_table 'countries', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
@@ -81,15 +84,30 @@ ActiveRecord::Schema[7.0].define(version: 20_231_120_020_511) do
     t.datetime 'updated_at', null: false
   end
 
+  create_table 'disputes', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
+    t.bigint 'transaction_id', null: false
+    t.bigint 'user_auth_id', null: false
+    t.string 'category'
+    t.text 'description'
+    t.string 'contact_number', null: false
+    t.boolean 'is_deleted', default: false, null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['transaction_id'], name: 'index_disputes_on_transaction_id'
+    t.index %w[user_auth_id transaction_id is_deleted], name: 'index_disputes_on_user_auth_id_and_transaction_id_and_is_deleted', unique: true
+    t.index ['user_auth_id'], name: 'index_disputes_on_user_auth_id'
+  end
+
   create_table 'otp_bypass_user_auths', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
     t.bigint 'user_auth_id', null: false
     t.boolean 'is_deleted', default: false, null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+    t.index %w[user_auth_id is_deleted], name: 'index_otp_bypass_user_auths_on_user_auth_id_and_is_deleted', unique: true
     t.index ['user_auth_id'], name: 'index_otp_bypass_user_auths_on_user_auth_id', unique: true
   end
 
-  create_table 'payment_transactions', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
+  create_table 'transactions', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
     t.decimal 'amount', precision: 10, scale: 3, default: '0.0'
     t.integer 'status', limit: 1, default: 1, null: false
     t.datetime 'expired_at'
@@ -97,10 +115,11 @@ ActiveRecord::Schema[7.0].define(version: 20_231_120_020_511) do
     t.decimal 'commission_fee', precision: 10, scale: 3, default: '0.0'
     t.decimal 'commission', precision: 5, scale: 3, default: '0.0'
     t.bigint 'user_auths_id', null: false
+    t.boolean 'is_deleted', default: false, null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.index ['reference_number'], name: 'index_payment_transactions_on_reference_number', unique: true
-    t.index ['user_auths_id'], name: 'index_payment_transactions_on_user_auths_id'
+    t.index ['reference_number'], name: 'index_transactions_on_reference_number', unique: true
+    t.index ['user_auths_id'], name: 'index_transactions_on_user_auths_id'
   end
 
   create_table 'user_auths', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
@@ -124,9 +143,9 @@ ActiveRecord::Schema[7.0].define(version: 20_231_120_020_511) do
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index ['countries_id'], name: 'index_user_auths_on_countries_id'
-    t.index ['email'], name: 'index_user_auths_on_email', unique: true
-    t.index ['phone'], name: 'index_user_auths_on_phone', unique: true
-    t.index ['secondary_phone'], name: 'index_user_auths_on_secondary_phone', unique: true
+    t.index %w[email is_deleted], name: 'index_user_auths_on_email_and_is_deleted', unique: true
+    t.index %w[phone is_deleted], name: 'index_user_auths_on_phone_and_is_deleted', unique: true
+    t.index %w[secondary_phone is_deleted], name: 'index_user_auths_on_secondary_phone_and_is_deleted', unique: true
   end
 
   add_foreign_key 'active_storage_attachments', 'active_storage_blobs', column: 'blob_id'
