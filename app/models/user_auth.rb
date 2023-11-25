@@ -22,19 +22,21 @@
 #  user_type         :string(255)
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
-#  countries_id      :bigint           not null
+#  country_id        :bigint           not null
 #  user_id           :integer
 #
 # Indexes
 #
-#  index_user_auths_on_countries_id                    (countries_id)
+#  index_user_auths_on_country_id                      (country_id)
 #  index_user_auths_on_email_and_is_deleted            (email,is_deleted) UNIQUE
 #  index_user_auths_on_phone_and_is_deleted            (phone,is_deleted) UNIQUE
 #  index_user_auths_on_secondary_phone_and_is_deleted  (secondary_phone,is_deleted) UNIQUE
 #
 class UserAuth < ApplicationRecord
   include DestroyRecord
-  # audited except: [:last_active_at]
+
+  audited except: [:last_active_at]
+  has_associated_audits
 
   attribute :locale, :string, default: 'en'
 

@@ -21,6 +21,8 @@
 class Comment < ApplicationRecord
   include DestroyRecord
 
+  audited associated_with: :user_auth
+
   belongs_to :commentable, polymorphic: true
   belongs_to :user_auth, optional: true
 

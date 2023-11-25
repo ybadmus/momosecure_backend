@@ -17,7 +17,8 @@
 #
 class OtpBypassUserAuth < ApplicationRecord
   include DestroyRecord
-  # audited associated_with: :user_auth
+
+  audited associated_with: :user_auth
 
   belongs_to :user_auth
 
