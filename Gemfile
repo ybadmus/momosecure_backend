@@ -81,4 +81,4 @@ gem 'image_processing', '>= 1.2'
 
 gem 'phone', '~> 1.2', '>= 1.2.3'
 
-gem 'audited', '~> 4.2', '>= 4.2.1'
+gem 'audited', '~> 5.4', '>= 5.4.2'
