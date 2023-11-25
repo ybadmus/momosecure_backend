@@ -78,3 +78,7 @@ end
 gem 'dotenv-rails', '~> 2.8', '>= 2.8.1'
 
 gem 'image_processing', '>= 1.2'
+
+gem 'phone', '~> 1.2', '>= 1.2.3'
+
+gem 'audited', '~> 4.2', '>= 4.2.1'

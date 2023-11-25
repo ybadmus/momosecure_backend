@@ -75,6 +75,8 @@ GEM
       activerecord (>= 3.2, < 8.0)
       rake (>= 10.4, < 14.0)
     ast (2.4.2)
+    audited (4.2.2)
+      rails-observers (~> 0.1.2)
     aws-eventstream (1.2.0)
     aws-partitions (1.853.0)
     aws-sdk-core (3.187.0)
@@ -157,6 +159,7 @@ GEM
     parser (3.2.2.4)
       ast (~> 2.4.1)
       racc
+    phone (1.2.3)
     psych (5.1.1)
       stringio
     puma (5.6.7)
@@ -188,6 +191,8 @@ GEM
     rails-html-sanitizer (1.6.0)
       loofah (~> 2.21)
       nokogiri (~> 1.14)
+    rails-observers (0.1.5)
+      activemodel (>= 4.0)
     railties (7.0.8)
       actionpack (= 7.0.8)
       activesupport (= 7.0.8)
@@ -261,6 +266,7 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers (~> 0.10.2)
   annotate
+  audited (~> 4.2, >= 4.2.1)
   aws-sdk-s3 (~> 1.137)
   bootsnap
   debug
@@ -269,6 +275,7 @@ DEPENDENCIES
   image_processing (>= 1.2)
   jwt (~> 2.7, >= 2.7.1)
   mysql2 (~> 0.5)
+  phone (~> 1.2, >= 1.2.3)
   puma (~> 5.0)
   pundit (~> 2.3, >= 2.3.1)
   rails (~> 7.0.8)
