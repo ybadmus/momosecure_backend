@@ -12,15 +12,14 @@
 #
 # Indexes
 #
-#  index_otp_bypass_user_auths_on_user_auth_id  (user_auth_id) UNIQUE
+#  index_otp_bypass_user_auths_on_user_auth_id                 (user_auth_id) UNIQUE
+#  index_otp_bypass_user_auths_on_user_auth_id_and_is_deleted  (user_auth_id,is_deleted) UNIQUE
 #
 class OtpBypassUserAuth < ApplicationRecord
   include DestroyRecord
   # audited associated_with: :user_auth
 
-  # Relationships
   belongs_to :user_auth
 
-  # Validations
   validates :user_auth, uniqueness: { scope: :is_deleted }
 end

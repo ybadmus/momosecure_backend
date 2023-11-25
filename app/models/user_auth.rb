@@ -38,22 +38,18 @@ class UserAuth < ApplicationRecord
 
   attribute :locale, :string, default: 'en'
 
-  # Relationships
   belongs_to :user, polymorphic: true, inverse_of: :user_auth
   has_many :payment_transactions, dependent: :destroy
 
-  # ENUM
   enum status: { active: 0, inactive: 1, blocked: 2 }
   enum otp_module: { disabled: 0, enabled: 1 }, _prefix: true
   enum login_type: { sms: 0, email: 1 }
 
-  # Validations
   validates :phone, :email, :secondary_phone, uniqueness: { scope: :is_deleted, allow_blank: true }
   validates :phone, presence: true, if: :sms?
   validates :email, presence: true, if: :email?
   validates :locale, inclusion: { in: %w[en] }
 
-  # Methods
   def record_last_active_at!
     # If last active is not nil
     # Don't update last active until it's one minute later
