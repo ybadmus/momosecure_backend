@@ -27,10 +27,10 @@
 #
 # Indexes
 #
-#  index_user_auths_on_countries_id     (countries_id)
-#  index_user_auths_on_email            (email) UNIQUE
-#  index_user_auths_on_phone            (phone) UNIQUE
-#  index_user_auths_on_secondary_phone  (secondary_phone) UNIQUE
+#  index_user_auths_on_countries_id                    (countries_id)
+#  index_user_auths_on_email_and_is_deleted            (email,is_deleted) UNIQUE
+#  index_user_auths_on_phone_and_is_deleted            (phone,is_deleted) UNIQUE
+#  index_user_auths_on_secondary_phone_and_is_deleted  (secondary_phone,is_deleted) UNIQUE
 #
 class UserAuth < ApplicationRecord
   include DestroyRecord

@@ -25,9 +25,9 @@ class CreateUserAuths < ActiveRecord::Migration[7.0]
     end
 
     change_table :user_auths, bulk: true do |_t|
-      add_index(:user_auths, :phone, unique: true)
-      add_index(:user_auths, :email, unique: true)
-      add_index(:user_auths, :secondary_phone, unique: true)
+      add_index(:user_auths, %i[phone is_deleted], unique: true)
+      add_index(:user_auths, %i[email is_deleted], unique: true)
+      add_index(:user_auths, %i[secondary_phone is_deleted], unique: true)
     end
   end
 end
