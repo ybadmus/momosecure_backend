@@ -26,20 +26,14 @@
 class Country < ApplicationRecord
   include DestroyRecord
 
-  has_many :business_accounts, dependent: :nullify
-  has_many :cities, dependent: :nullify
-
-  # #Validations
   validates :country_name, :phone_code, :iso_code2, :currency, :nationality, :vat_percentage, :vat_multiplier, :vat_fraction, presence: true
   validates :country_name, :phone_code, :iso_code2, uniqueness: true
 
-  # #Methods
-
-  def self.get_by_phone_code(phonecode)
-    country_cache_key = "country_#{phonecode}"
+  def self.get_country_by_phone_code(phone_code)
+    country_cache_key = "country_#{phone_code}"
     country = Rails.cache.read(country_cache_key)
     if country.blank?
-      country = Country.find_by(phone_code: phonecode)
+      country = find_by(phone_code:)
 
       Rails.cache.write(country_cache_key, country, expires_in: 7.days)
     end
@@ -53,7 +47,7 @@ class Country < ApplicationRecord
   end
 
   def self.get_country_code_from_phone_code(phone_code)
-    country = Country.get_by_phone_code(phone_code)
+    country = get_country_by_phone_code(phone_code)
     country.present? ? country.iso_code2 : 'GH'
   end
 
