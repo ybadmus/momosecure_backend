@@ -8,5 +8,9 @@ class CreateOtpBypassUserAuth < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
+
+    change_table :otp_bypass_user_auths, bulk: true do |_t|
+      add_index(:otp_bypass_user_auths, %i[user_auth_id is_deleted], unique: true)
+    end
   end
 end
