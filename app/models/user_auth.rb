@@ -41,7 +41,8 @@ class UserAuth < ApplicationRecord
   attribute :locale, :string, default: 'en'
 
   belongs_to :user, polymorphic: true, inverse_of: :user_auth
-  has_many :payment_transactions, dependent: :destroy
+  has_many :transactions_as_sender, dependent: :destroy, class_name: 'Transaction', foreign_key: 'sender_user_auth_id', inverse_of: :user_auth
+  has_many :transactions_as_receiver, dependent: :destroy, class_name: 'Transaction', foreign_key: 'receiver_user_auth_id', inverse_of: :user_auth
 
   enum status: { active: 0, inactive: 1, blocked: 2 }
   enum otp_module: { disabled: 0, enabled: 1 }, _prefix: true
