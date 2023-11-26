@@ -77,4 +77,7 @@ Rails.application.configure do
     authentication: 'plain',
     enable_starttls_auto: true
   }
+
+  # Automatic inverse_of detection for associations with scopes
+  config.active_record.automatic_scope_inversing = true
 end

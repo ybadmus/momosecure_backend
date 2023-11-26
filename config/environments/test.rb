@@ -59,4 +59,7 @@ Rails.application.configure do
 
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
+
+  # Automatic inverse_of detection for associations with scopes
+  config.active_record.automatic_scope_inversing = true
 end

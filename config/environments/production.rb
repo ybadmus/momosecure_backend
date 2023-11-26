@@ -85,4 +85,7 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # Automatic inverse_of detection for associations with scopes
+  config.active_record.automatic_scope_inversing = true
 end
