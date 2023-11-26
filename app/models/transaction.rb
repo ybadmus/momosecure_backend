@@ -24,6 +24,9 @@
 class Transaction < ApplicationRecord
   include DestroyRecord
 
+  audited
+  has_associated_audits
+
   enum status: { under_creation: 1, pending: 2, accepted: 3, in_progress: 4, expired: 5, rejected: 6, cancelled: 7, disputed: 8, paid: 9, reversed: 10, withheld: 11 }
 
   belongs_to :sender_user_auth, class_name: 'UserAuth'

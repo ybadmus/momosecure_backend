@@ -26,6 +26,8 @@
 class Country < ApplicationRecord
   include DestroyRecord
 
+  audited
+
   validates :country_name, :phone_code, :iso_code2, :currency, :nationality, :vat_percentage, :vat_multiplier, :vat_fraction, presence: true
   validates :country_name, :phone_code, :iso_code2, uniqueness: true
 

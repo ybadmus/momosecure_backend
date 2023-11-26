@@ -14,5 +14,7 @@ class Customer < ApplicationRecord
   include AuthenticatableConcern
   include DestroyRecord
 
+  audited
+
   validates :name, presence: true
 end

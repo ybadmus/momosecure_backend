@@ -23,7 +23,8 @@
 class Dispute < ApplicationRecord
   include DestroyRecord
 
-  audited associated_with: :transaction
+  audited
+  has_associated_audits
 
   belongs_to :transaction
   belongs_to :user_auth, optional: true

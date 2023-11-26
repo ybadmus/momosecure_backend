@@ -35,7 +35,7 @@
 class UserAuth < ApplicationRecord
   include DestroyRecord
 
-  audited except: [:last_active_at]
+  audited
   has_associated_audits
 
   attribute :locale, :string, default: 'en'
