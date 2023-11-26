@@ -23,9 +23,11 @@
 class Dispute < ApplicationRecord
   include DestroyRecord
 
-  has_many :comments, as: :commentable, dependent: :destroy
+  audited associated_with: :transaction
+
   belongs_to :transaction
   belongs_to :user_auth, optional: true
+  has_many :comments, as: :commentable, dependent: :destroy
 
   validates :description, :contact_number, :category, presence: true
   validates :user_auth, uniqueness: { scope: %i[transaction_id is_deleted], allow_blank: true }
