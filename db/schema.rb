@@ -72,14 +72,14 @@ ActiveRecord::Schema[7.0].define(version: 20_231_125_232_405) do
 
   create_table 'comments', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
     t.text 'content'
-    t.bigint 'user_auths_id', null: false
-    t.string 'attachable_type'
-    t.bigint 'attachable_id'
+    t.bigint 'user_auth_id', null: false
+    t.string 'commentable_type'
+    t.bigint 'commentable_id'
     t.boolean 'is_deleted', default: false, null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.index %w[attachable_type attachable_id], name: 'index_comments_on_attachable'
-    t.index ['user_auths_id'], name: 'index_comments_on_user_auths_id'
+    t.index %w[commentable_type commentable_id], name: 'index_comments_on_commentable'
+    t.index ['user_auth_id'], name: 'index_comments_on_user_auth_id'
   end
 
   create_table 'countries', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
