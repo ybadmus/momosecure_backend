@@ -44,6 +44,7 @@ module Api
       end
 
       def authorize_users!
+        # Allow only admins and parties involved in the payment transaction to leave comments
         authorize_user_types!(%w[Admin])
       end
 
