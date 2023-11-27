@@ -9,6 +9,7 @@
 #  contact_number :string(255)      not null
 #  description    :text(65535)
 #  is_deleted     :boolean          default(FALSE), not null
+#  status         :integer          default("open"), not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  transaction_id :bigint           not null
@@ -25,6 +26,8 @@ class Dispute < ApplicationRecord
 
   audited
   has_associated_audits
+
+  enum status: { open: 1, close: 2 }
 
   belongs_to :transaction
   belongs_to :user_auth, optional: true
