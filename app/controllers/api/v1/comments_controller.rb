@@ -39,6 +39,10 @@ module Api
 
       private
 
+      def action_params
+        params.permit(:content)
+      end
+
       def authorize_users!
         authorize_user_types!(%w[Admin])
       end
