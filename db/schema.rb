@@ -112,6 +112,7 @@ ActiveRecord::Schema[7.0].define(version: 20_231_125_232_405) do
     t.string 'category'
     t.text 'description'
     t.string 'contact_number', null: false
+    t.integer 'status', limit: 1, default: 1, null: false
     t.boolean 'is_deleted', default: false, null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
