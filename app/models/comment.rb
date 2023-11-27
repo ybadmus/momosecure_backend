@@ -4,19 +4,19 @@
 #
 # Table name: comments
 #
-#  id              :bigint           not null, primary key
-#  attachable_type :string(255)
-#  content         :text(65535)
-#  is_deleted      :boolean          default(FALSE), not null
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  attachable_id   :bigint
-#  user_auths_id   :bigint           not null
+#  id               :bigint           not null, primary key
+#  commentable_type :string(255)
+#  content          :text(65535)
+#  is_deleted       :boolean          default(FALSE), not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  commentable_id   :bigint
+#  user_auth_id     :bigint           not null
 #
 # Indexes
 #
-#  index_comments_on_attachable     (attachable_type,attachable_id)
-#  index_comments_on_user_auths_id  (user_auths_id)
+#  index_comments_on_commentable   (commentable_type,commentable_id)
+#  index_comments_on_user_auth_id  (user_auth_id)
 #
 class Comment < ApplicationRecord
   include DestroyRecord

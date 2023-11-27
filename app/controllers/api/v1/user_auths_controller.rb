@@ -3,9 +3,10 @@
 module Api
   module V1
     class UserAuthsController < Api::V1::BaseController
-      # before_action :authorize_admin!
-      # before_action :set_user_auth, only: :destroy
+      before_action :authorize_admin!
+      before_action :set_user_auth, only: :destroy
 
+      # POST : /api/v1/user_auths
       def index
         customers = if params[:query].present?
                       UserAuth.where('id LIKE :query or phone LIKE :query or email LIKE :query', query: "%#{params[:query]}%")
@@ -22,11 +23,13 @@ module Api
         end
       end
 
+      # DELETE : /api/v1/user_auths/:id
       def destroy
         @user.destroy
         render_success('success', @user.as_json(admin: @current_user.admin?))
       end
 
+      # POST : /api/v1/user_auths/create_admin
       def create_admin
         return render_error('Please provide a name for the mrsool admin') if admin_params[:name].blank?
 

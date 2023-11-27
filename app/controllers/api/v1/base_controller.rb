@@ -3,8 +3,7 @@
 module Api
   module V1
     class BaseController < ApplicationController
-      # before_action :authenticate_request!
-      # before_action :authorize_users!
+      before_action :authenticate_request!
 
       # GET : /api/v1/{resource}
       def index
