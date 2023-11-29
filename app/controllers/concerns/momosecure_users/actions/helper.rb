@@ -18,6 +18,10 @@ module MomosecureUsers
       def user_params
         @user_params ||= resource_params(controller_name.singularize.gsub('momosecure_', '').to_sym)
       end
+
+      def profile_owner?
+        user == @current_user.user
+      end
     end
   end
 end

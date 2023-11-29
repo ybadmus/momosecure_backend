@@ -25,8 +25,10 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :admins, except: :destroy
+      resources :admins
       resources :customers, except: :index
+      resources :disputes
+      resources :comments
     end
   end
 end

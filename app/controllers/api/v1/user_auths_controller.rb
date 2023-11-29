@@ -11,11 +11,10 @@ module Api
         customers = if params[:query].present?
                       UserAuth.where('id LIKE :query or phone LIKE :query or email LIKE :query', query: "%#{params[:query]}%")
                     else
-                      UserAuth.momosecure_customers
+                      UserAuth.customers
                     end
-        customers = customers.where.not(user_type: 'Admin')
-        customers = optional_paginate(customers.order(id: :desc))
 
+        customers = optional_paginate(customers.order(id: :desc))
         if params[:page].present?
           render_success_paginated(customers, UserAuthSerializer, admin: @current_user.admin?)
         else
@@ -31,7 +30,7 @@ module Api
 
       # POST : /api/v1/user_auths/create_admin
       def create_admin
-        return render_error('Please provide a name for the mrsool admin') if admin_params[:name].blank?
+        return render_error('Please provide a name for the momosecure admin') if admin_params[:name].blank?
 
         user = UserAuth.new(admin_params.except(:name))
         user.user = Admin.new(name: admin_params[:name])

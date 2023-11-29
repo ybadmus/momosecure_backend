@@ -4,7 +4,7 @@ module Api
   module V1
     class CustomersController < ApplicationController
       before_action :authenticate_request!
-      before_action :authorize_admin_and_profile_owner!
+      before_action :authorize_admin_and_customer!
 
       has_scope :by_name do |controller, scope, value|
         scope.by_name(value, controller.model)
@@ -18,16 +18,8 @@ module Api
 
       private
 
-      def admin_or_profile_owner?
-        @current_user.admin? || same_as_profile_owner?
-      end
-
-      def authorize_admin_and_profile_owner!
-        render_unauthorized('Not Authorized.') unless admin_or_profile_owner?
-      end
-
-      def same_as_profile_owner?
-        controller_name.singularize.classify.constantize.find(params[:id]) == current_user.user
+      def authorize_admin_and_customer!
+        authorize_user_types!(%w[Admin Customer])
       end
     end
   end

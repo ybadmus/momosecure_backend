@@ -44,7 +44,7 @@ module Api
       end
 
       def authorize_users!
-        # Allow only admins and parties involved in the payment transaction to leave comments
+        # Allow only admins and the users involved in the transaction to leave comments
         authorize_user_types!(%w[Admin])
       end
 
@@ -61,7 +61,7 @@ module Api
 
         filtered_comments = comments
         filtered_comments = filtered_comments.where(user_auth_id: params[:user_auth_id]) if params[:user_auth_id].present?
-        filtered_comments = filtered_comments.where('content LIKE :content', content: "%#{params[:content]}%") if params[:content].present?
+        filtered_comments = filtered_comments.where('content LIKE :query', query: "%#{params[:query]}%") if params[:query].present?
         filtered_comments
       end
     end

@@ -5,7 +5,7 @@ class CreateUserAuths < ActiveRecord::Migration[7.0]
     create_table :user_auths do |t|
       t.string(:auth_token)
       t.boolean(:can_takeover_user, default: false, null: false)
-      t.references(:country, null: false)
+      t.string(:country_code, default: 'GH', limit: 3, null: false)
       t.string(:email)
       t.string(:ip_address)
       t.boolean(:is_deleted, default: false, null: false)

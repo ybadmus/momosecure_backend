@@ -7,7 +7,11 @@ module Api
 
       # GET : api/v1/disputes
       def index
-        disputes = Dispute.where(user_auth_id: @current_user.id)
+        disputes = if params[:user_auth_id].present?
+                     Dispute.where(user_auth_id: params[:user_auth_id])
+                   else
+                     Dispute.where(user_auth_id: @current_user.id)
+                   end
         disputes = filter_disputes(disputes, params)
         disputes = optional_paginate(disputes)
         render_success_paginated(disputes, DisputeSerializer)
@@ -19,7 +23,7 @@ module Api
 
       # POST : api/v1/disputes
       def create
-        dispute = resource.new(action_params.merge(user_auth: current_user))
+        dispute = resource_class.new(action_params.merge(user_auth: current_user))
         if dispute.save
           # Send notification to the other party about dispute creation
           render_success('success', dispute, DisputeSerializer)
@@ -39,11 +43,11 @@ module Api
       private
 
       def action_params
-        params.permit(:category, :contact_number, :description, :transaction_id)
+        params.permit(:category, :contact_number, :description, :transaction_id, :status)
       end
 
       def authorize_users!
-        # Allow only admins and parties involved in the payment transaction create disputes
+        # Allow only admins and the users involved in the transaction to create disputes
         authorize_user_types!(%w[Admin])
       end
 

@@ -148,7 +148,7 @@ ActiveRecord::Schema[7.0].define(version: 20_231_125_232_405) do
   create_table 'user_auths', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
     t.string 'auth_token'
     t.boolean 'can_takeover_user', default: false, null: false
-    t.bigint 'country_id', null: false
+    t.string 'country_code', limit: 3, default: 'GH', null: false
     t.string 'email'
     t.string 'ip_address'
     t.boolean 'is_deleted', default: false, null: false
@@ -165,7 +165,6 @@ ActiveRecord::Schema[7.0].define(version: 20_231_125_232_405) do
     t.integer 'user_id'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.index ['country_id'], name: 'index_user_auths_on_country_id'
     t.index %w[email is_deleted], name: 'index_user_auths_on_email_and_is_deleted', unique: true
     t.index %w[phone is_deleted], name: 'index_user_auths_on_phone_and_is_deleted', unique: true
     t.index %w[secondary_phone is_deleted], name: 'index_user_auths_on_secondary_phone_and_is_deleted', unique: true
