@@ -5,6 +5,10 @@ module UserAuthorization
     authorize_by_user_type!('Admin')
   end
 
+  def authorize_customer!
+    authorize_by_user_type!('Customer')
+  end
+
   def authorize_by_user_type!(user_type)
     render_unauthorized('Not Authorized.') if @current_user.blank? || @current_user.user_type != user_type
   end
