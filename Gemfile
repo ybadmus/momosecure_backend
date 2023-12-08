@@ -58,21 +58,20 @@ gem 'sentry-ruby'
 gem 'aws-sdk-s3', '~> 1.137'
 gem 'fastimage', '~> 2.2', '>= 2.2.6'
 
+gem 'faker', '~> 3.2', '>= 3.2.2'
+
 group :development, :test do
+  gem 'annotate'
+
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri mingw x64_mingw]
+  gem 'factory_bot_rails', '~> 6.4', '>= 6.4.2'
 
+  gem 'rspec-rails', '~> 6.1.0'
   gem 'rubocop', '~> 1.57', '>= 1.57.1', require: false
   gem 'rubocop-performance', '~> 1.19', '>= 1.19.1', require: false
   gem 'rubocop-rails', '~> 2.21', '>= 2.21.2', require: false
   gem 'rubocop-rspec', '~> 2.24', '>= 2.24.1', require: false
-end
-
-group :development do
-  # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
-  # gem "spring"
-
-  gem 'annotate'
 end
 
 gem 'dotenv-rails', '~> 2.8', '>= 2.8.1'

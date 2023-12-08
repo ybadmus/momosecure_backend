@@ -5638,3 +5638,6 @@ Rails/UnknownEnv:
     - development
     - test
     - staging
+
+Rails/LexicallyScopedActionFilter:
+  Enabled: false
