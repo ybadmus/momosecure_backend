@@ -2,7 +2,7 @@
 
 # == Schema Information
 #
-# Table name: transactions
+# Table name: payment_transactions
 #
 #  id               :bigint           not null, primary key
 #  amount           :decimal(10, 3)   default(0.0)
@@ -18,10 +18,10 @@
 #
 # Indexes
 #
-#  index_transactions_on_reference_number  (reference_number) UNIQUE
-#  index_transactions_on_user_auths_id     (user_auths_id)
+#  index_payment_transactions_on_reference_number  (reference_number) UNIQUE
+#  index_payment_transactions_on_user_auths_id     (user_auths_id)
 #
-class Transaction < ApplicationRecord
+class PaymentTransaction < ApplicationRecord
   include DestroyRecord
 
   audited
