@@ -8,7 +8,7 @@ class CreatePaymentTransactionTimeline < ActiveRecord::Migration[7.0]
       t.datetime(:expire_at)
       t.datetime(:rejected_at)
       t.datetime(:cancel_at)
-      t.datetime(:dispute_at)
+      t.datetime(:disputed_at)
       t.datetime(:paid_at)
       t.datetime(:withheld_at)
       t.datetime(:reverse_at)
