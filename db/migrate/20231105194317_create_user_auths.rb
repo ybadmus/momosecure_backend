@@ -14,7 +14,6 @@ class CreateUserAuths < ActiveRecord::Migration[7.0]
       t.string(:locale, default: 'en')
       t.boolean(:login_status, default: false, null: false)
       t.integer(:login_type, limit: 1)
-      t.integer(:opt_module, limit: 1)
       t.string(:phone, default: '', null: false)
       t.string(:secondary_phone)
       t.integer(:status, limit: 1)
