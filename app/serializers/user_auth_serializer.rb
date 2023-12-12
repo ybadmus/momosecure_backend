@@ -16,7 +16,6 @@
 #  locale            :string(255)      default("en")
 #  login_status      :boolean          default(FALSE), not null
 #  login_type        :integer
-#  opt_module        :integer
 #  phone             :string(255)      default(""), not null
 #  secondary_phone   :string(255)
 #  status            :integer
