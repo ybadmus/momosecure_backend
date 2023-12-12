@@ -43,7 +43,6 @@ class UserAuth < ApplicationRecord
   has_many :transactions_as_receiver, dependent: :destroy, class_name: 'PaymentTransaction', foreign_key: 'receiver_user_auth_id', inverse_of: :user_auth
 
   enum status: { active: 0, inactive: 1, blocked: 2 }
-  enum otp_module: { disabled: 0, enabled: 1 }, _prefix: true
   enum login_type: { sms: 0, email: 1 }
 
   validates :phone, :email, :secondary_phone, uniqueness: { scope: :is_deleted, allow_blank: true }
@@ -92,10 +91,6 @@ class UserAuth < ApplicationRecord
 
   def admin?
     user_type == 'Admin'
-  end
-
-  def super_user?
-    user_type == 'SuperUser'
   end
 
   def customer?

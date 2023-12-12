@@ -7,7 +7,7 @@
 #  id                     :bigint           not null, primary key
 #  accepted_at            :datetime
 #  cancel_at              :datetime
-#  dispute_at             :datetime
+#  disputed_at            :datetime
 #  expire_at              :datetime
 #  paid_at                :datetime
 #  rejected_at            :datetime
