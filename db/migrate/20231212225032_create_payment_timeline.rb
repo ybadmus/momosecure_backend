@@ -1,9 +1,7 @@
-# frozen_string_literal: true
-
-class CreatePaymentTransactionTimeline < ActiveRecord::Migration[7.0]
+class CreatePaymentTimeline < ActiveRecord::Migration[7.0]
   def change
-    create_table :payment_transaction_timelines do |t|
-      t.references(:payment_transaction, null: false, index: { unique: true })
+    create_table :payment_timelines do |t|
+      t.references(:payments, null: false, index: { unique: true })
       t.datetime(:accepted_at)
       t.datetime(:expire_at)
       t.datetime(:rejected_at)

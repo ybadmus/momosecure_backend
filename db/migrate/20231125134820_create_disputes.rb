@@ -3,7 +3,7 @@
 class CreateDisputes < ActiveRecord::Migration[7.0]
   def change
     create_table :disputes do |t|
-      t.references(:payment_transaction, null: false)
+      t.references(:payment, null: false)
       t.references(:creator_user_auth, null: false, foreign_key: { to_table: 'user_auths' })
       t.references(:assignee_user_auth, null: false, foreign_key: { to_table: 'user_auths' })
       t.string(:category)
