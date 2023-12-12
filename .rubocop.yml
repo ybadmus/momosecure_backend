@@ -5641,3 +5641,6 @@ Rails/UnknownEnv:
 
 Rails/LexicallyScopedActionFilter:
   Enabled: false
+
+Rails/CreateTableWithTimestamps:
+  Enabled: false
