@@ -7,7 +7,6 @@ RSpec.describe Api::V1::CommentsController do
   let(:admin_user_auth) { create(:user_auth, :admin, email: 'admin@momosecure.co') }
   let(:customer_user_auth) { create(:user_auth, :customer, email: 'customer@momosecure.co') }
 
-
   describe 'GET /index' do
     context 'with authorized user credentials' do
       before do

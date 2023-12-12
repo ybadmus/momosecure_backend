@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :user_auth do
+  factory :user_auth, class: 'UserAuth' do
     user { nil }
     login_type { :sms }
     sequence(:phone) { |i| "+23355#{i}027333" }
