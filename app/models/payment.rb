@@ -2,7 +2,7 @@
 
 # == Schema Information
 #
-# Table name: payment_transactions
+# Table name: payments
 #
 #  id                    :bigint           not null, primary key
 #  amount                :decimal(10, 3)   default(0.0)
@@ -21,16 +21,16 @@
 #
 # Indexes
 #
-#  index_payment_transactions_on_receiver_user_auth_id  (receiver_user_auth_id)
-#  index_payment_transactions_on_reference_number       (reference_number) UNIQUE
-#  index_payment_transactions_on_sender_user_auth_id    (sender_user_auth_id)
+#  index_payments_on_receiver_user_auth_id  (receiver_user_auth_id)
+#  index_payments_on_reference_number       (reference_number) UNIQUE
+#  index_payments_on_sender_user_auth_id    (sender_user_auth_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (receiver_user_auth_id => user_auths.id)
 #  fk_rails_...  (sender_user_auth_id => user_auths.id)
 #
-class PaymentTransaction < ApplicationRecord
+class Payment < ApplicationRecord
   include DestroyRecord
 
   audited
@@ -52,6 +52,6 @@ class PaymentTransaction < ApplicationRecord
   end
 
   def record_payment_timeline
-    Payment::TimelineService.new(payment_transaction: self).perform
+    Payment::TimelineService.new(payment: self).perform
   end
 end

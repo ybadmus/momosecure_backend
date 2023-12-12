@@ -16,7 +16,7 @@ class CreateDisputes < ActiveRecord::Migration[7.0]
     end
 
     change_table :disputes, bulk: true do |_t|
-      add_index(:disputes, %i[creator_user_auth_id payment_transaction_id is_deleted], unique: true, name: 'disputes_uniqueness_index')
+      add_index(:disputes, %i[creator_user_auth_id payment_id is_deleted], unique: true, name: 'disputes_uniqueness_index')
     end
   end
 end

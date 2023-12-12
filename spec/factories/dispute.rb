@@ -8,7 +8,7 @@ FactoryBot.define do
     contact_number
     description
     status
-    payment_transaction { association :payment_transaction }
+    payment { association :payment }
     user { association :user_auth }
   end
 end
