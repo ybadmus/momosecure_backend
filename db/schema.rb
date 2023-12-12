@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_25_232405) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_11_204339) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -106,7 +106,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_25_232405) do
 
   create_table "disputes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "payment_transaction_id", null: false
-    t.bigint "user_auth_id", null: false
+    t.bigint "creator_user_auth_id", null: false
+    t.bigint "assignee_user_auth_id", null: false
     t.string "category"
     t.text "description"
     t.string "contact_number", null: false
@@ -114,9 +115,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_25_232405) do
     t.boolean "is_deleted", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["assignee_user_auth_id"], name: "index_disputes_on_assignee_user_auth_id"
+    t.index ["creator_user_auth_id", "payment_transaction_id", "is_deleted"], name: "disputes_uniqueness_index", unique: true
+    t.index ["creator_user_auth_id"], name: "index_disputes_on_creator_user_auth_id"
     t.index ["payment_transaction_id"], name: "index_disputes_on_payment_transaction_id"
-    t.index ["user_auth_id", "payment_transaction_id", "is_deleted"], name: "dispute_uniqueness_index", unique: true
-    t.index ["user_auth_id"], name: "index_disputes_on_user_auth_id"
   end
 
   create_table "otp_bypass_user_auths", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -128,6 +130,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_25_232405) do
     t.index ["user_auth_id"], name: "index_otp_bypass_user_auths_on_user_auth_id", unique: true
   end
 
+  create_table "payment_transaction_timelines", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "payment_transaction_id", null: false
+    t.datetime "accepted_at"
+    t.datetime "expire_at"
+    t.datetime "rejected_at"
+    t.datetime "cancel_at"
+    t.datetime "disputed_at"
+    t.datetime "paid_at"
+    t.datetime "withheld_at"
+    t.datetime "reverse_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["payment_transaction_id"], name: "index_payment_transaction_timelines_on_payment_transaction_id", unique: true
+  end
+
   create_table "payment_transactions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.decimal "amount", precision: 10, scale: 3, default: "0.0"
     t.integer "status", limit: 1, default: 1, null: false
@@ -135,12 +152,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_25_232405) do
     t.string "reference_number", limit: 500, null: false
     t.decimal "commission_fee", precision: 10, scale: 3, default: "0.0"
     t.decimal "commission", precision: 5, scale: 3, default: "0.0"
-    t.bigint "user_auths_id", null: false
+    t.bigint "sender_user_auth_id", null: false
+    t.bigint "receiver_user_auth_id", null: false
+    t.string "sender_phone", default: "", null: false
+    t.string "receiver_phone", default: "", null: false
     t.boolean "is_deleted", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["receiver_user_auth_id"], name: "index_payment_transactions_on_receiver_user_auth_id"
     t.index ["reference_number"], name: "index_payment_transactions_on_reference_number", unique: true
-    t.index ["user_auths_id"], name: "index_payment_transactions_on_user_auths_id"
+    t.index ["sender_user_auth_id"], name: "index_payment_transactions_on_sender_user_auth_id"
   end
 
   create_table "user_auths", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -155,7 +176,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_25_232405) do
     t.string "locale", default: "en"
     t.boolean "login_status", default: false, null: false
     t.integer "login_type", limit: 1
-    t.integer "opt_module", limit: 1
     t.string "phone", default: "", null: false
     t.string "secondary_phone"
     t.integer "status", limit: 1
@@ -170,4 +190,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_25_232405) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "disputes", "user_auths", column: "assignee_user_auth_id"
+  add_foreign_key "disputes", "user_auths", column: "creator_user_auth_id"
+  add_foreign_key "payment_transactions", "user_auths", column: "receiver_user_auth_id"
+  add_foreign_key "payment_transactions", "user_auths", column: "sender_user_auth_id"
 end

@@ -86,7 +86,7 @@ class AuthService
       return :error, error
     end
 
-    phone = is_main_phone ? user_auth.phone : user_auth.secondary_phoneq
+    phone = is_main_phone ? user_auth.phone : user_auth.secondary_phone
 
     # #Authenticate using sms cache verification system if tfa is disabled or user wants sms authentication
     if user_auth.otp_module_disabled? || tfa == 'false'
