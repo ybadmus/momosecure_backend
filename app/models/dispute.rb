@@ -43,7 +43,7 @@ class Dispute < ApplicationRecord
   has_many :comments, as: :commentable, dependent: :destroy
 
   validates :description, :contact_number, :category, presence: true
-  validates :creator_user_auth, uniqueness: { scope: %i[payment_transaction_id is_deleted], allow_blank: true }
+  validates :creator_user_auth, uniqueness: { scope: %i[payment_id is_deleted], allow_blank: true }
 
   has_many_attached :images do |attachable|
     attachable.variant :thumb, resize_to_limit: [200, 200]

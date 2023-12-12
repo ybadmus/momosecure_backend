@@ -40,7 +40,7 @@ class Payment < ApplicationRecord
 
   belongs_to :sender_user_auth, class_name: 'UserAuth', optional: false
   belongs_to :receiver_user_auth, class_name: 'UserAuth', optional: true
-  has_one :payment_transaction_timeline, dependent: :destroy
+  has_one :payment_timeline, dependent: :destroy
 
   after_save :record_payment_timeline
 

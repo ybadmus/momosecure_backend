@@ -36,6 +36,6 @@ class DisputeSerializer < ActiveModel::Serializer
   end
 
   def transaction
-    object.payment_transaction.as_json
+    object.payment.as_json
   end
 end

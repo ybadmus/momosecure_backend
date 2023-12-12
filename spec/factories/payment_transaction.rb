@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :payment_transaction, class: 'PaymentTransaction' do
+  factory :payment, class: 'Payment' do
     amount { 1000 }
     status { 1 }
     commission { 1.0 }
