@@ -36,11 +36,12 @@ class Payment < ApplicationRecord
   audited
   has_associated_audits
 
-  enum status: { under_creation: 1, pending: 2, accepted: 3, in_progress: 4, expire: 5, rejected: 6, cancel: 7, disputed: 8, paid: 9, reverse: 10, withheld: 11 }
+  enum status: { under_creation: 1, pending: 2, accepted: 3, in_progress: 4, expire: 5, rejected: 6, cancel: 7, disputed: 8, paid: 9, reverse: 10, withheld: 11, cancel_under_creation: 12 }
 
   belongs_to :sender_user_auth, class_name: 'UserAuth', optional: false
   belongs_to :receiver_user_auth, class_name: 'UserAuth', optional: true
   has_one :payment_timeline, dependent: :destroy
+  has_many :disputes, dependent: :destroy
 
   after_save :record_payment_timeline
 

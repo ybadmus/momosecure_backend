@@ -29,13 +29,13 @@
 #  fk_rails_...  (creator_user_auth_id => user_auths.id)
 #
 class DisputeSerializer < ActiveModel::Serializer
-  attributes :id, :description, :category, :status, :contact_number, :transaction, :created_by, :created_at, :updated_at
+  attributes :id, :description, :category, :status, :contact_number, :payment, :created_by, :created_at, :updated_at
 
   def created_by
-    ActiveModelSerializers::SerializableResource.new(object.user_auth, serializer: UserAuthSerializer)
+    object.user_auth&.user&.name
   end
 
-  def transaction
+  def payment
     object.payment.as_json
   end
 end
